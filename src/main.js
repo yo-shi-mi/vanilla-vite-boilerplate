@@ -94,3 +94,4 @@ function showPopup() {
 // Expose necessary functions to global scope
 window.showPopup = showPopup;
 window.connectWallet = connectWallet;
+document.addEventListener('DOMContentLoaded', router);
