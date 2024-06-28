@@ -48,7 +48,6 @@ function router() {
     const app = document.querySelector('#app')
     app.innerHTML = ''
 
-    // Always render the header
     app.appendChild(renderHeader())
 
     switch (path) {
@@ -57,6 +56,9 @@ function router() {
             break
         case '/restaurant':
             app.appendChild(renderRestaurant())
+            break
+        case '/points':
+            app.appendChild(renderPointsSystem())
             break
         default:
             app.appendChild(renderHome())
