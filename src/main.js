@@ -4,6 +4,7 @@ import { renderHome } from './pages/home.js'
 import { renderRestaurant } from './pages/restaurant.js'
 import { renderHeader } from './components/header.js'
 import { connectWallet } from './utils/ethers.js'
+import { renderPointsSystem } from './pages/pointsSystem.js'
 
 // Check if running in Telegram Web App
 const isTWA = window.Telegram && window.Telegram.WebApp;
