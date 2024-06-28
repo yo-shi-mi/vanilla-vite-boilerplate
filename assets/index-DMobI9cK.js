@@ -1,19 +1,19 @@
 (function(){const n=document.createElement("link").relList;if(n&&n.supports&&n.supports("modulepreload"))return;for(const t of document.querySelectorAll('link[rel="modulepreload"]'))c(t);new MutationObserver(t=>{for(const o of t)if(o.type==="childList")for(const a of o.addedNodes)a.tagName==="LINK"&&a.rel==="modulepreload"&&c(a)}).observe(document,{childList:!0,subtree:!0});function r(t){const o={};return t.integrity&&(o.integrity=t.integrity),t.referrerPolicy&&(o.referrerPolicy=t.referrerPolicy),t.crossOrigin==="use-credentials"?o.credentials="include":t.crossOrigin==="anonymous"?o.credentials="omit":o.credentials="same-origin",o}function c(t){if(t.ep)return;t.ep=!0;const o=r(t);fetch(t.href,o)}})();function l(){const e=document.createElement("main");return e.className="container",e.innerHTML=`
-      <div class="points-system">Points System</div>
-      <h2>Choose The Restaurant !</h2>
-      <div class="restaurant-grid">
-        <button class="restaurant-button">餐廳 A</button>
-        <button class="restaurant-button">餐廳 B</button>
-        <button class="restaurant-button">餐廳 C</button>
-        <button class="restaurant-button">餐廳 D</button>
-      </div>
-    `,e}function u(){const e=document.createElement("main");return e.className="container",e.innerHTML=`
+    <div class="points-system">Points System</div>
+    <h2>Choose The Restaurant !</h2>
+    <div class="restaurant-grid">
+      <button class="restaurant-button">餐廳 A</button>
+      <button class="restaurant-button">餐廳 B</button>
+      <button class="restaurant-button">餐廳 C</button>
+      <button class="restaurant-button">餐廳 D</button>
+    </div>
+  `,e}function u(){const e=document.createElement("main");return e.className="container",e.innerHTML=`
       <h2>Restaurant Details</h2>
       <p>Coming soon...</p>
     `,e}function p(){var n;const e=document.createElement("header");return e.innerHTML=`
     <div class="container header-content">
       <div class="logo">
-        <img src="/images/logo.png" alt="TeleDine Logo">
+        <img src="/images/logo.jpg" alt="TeleDine Logo">
         <h1>TeleDine</h1>
       </div>
       ${(n=window.Telegram)!=null&&n.WebApp?"":'<button id="connectWallet" class="connect-wallet">Connect Wallet</button>'}
