@@ -13,7 +13,7 @@
     `,e}function p(){var n;const e=document.createElement("header");return e.innerHTML=`
     <div class="container header-content">
       <div class="logo">
-        <img src="/images/logo.jpg" alt="TeleDine Logo">
+        <img src="./images/logo.jpg" alt="TeleDine Logo">
         <h1>TeleDine</h1>
       </div>
       ${(n=window.Telegram)!=null&&n.WebApp?"":'<button id="connectWallet" class="connect-wallet">Connect Wallet</button>'}
