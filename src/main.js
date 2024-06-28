@@ -20,11 +20,11 @@ if (isTWA) {
 
     // Set up Main Button
     Telegram.WebApp.MainButton.setParams({
-      text: 'Connect Wallet'
+        text: 'Connect Wallet'
   });
 
     Telegram.WebApp.MainButton.onClick(function () {
-      connectWallet();
+        connectWallet();
   });
 
     Telegram.WebApp.MainButton.show();
@@ -48,9 +48,8 @@ function router() {
     const app = document.querySelector('#app')
     app.innerHTML = ''
 
-    if (!isTWA) {
-        app.appendChild(renderHeader())
-    }
+    // Always render the header
+    app.appendChild(renderHeader())
 
     switch (path) {
         case '/':
