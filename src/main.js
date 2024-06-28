@@ -45,23 +45,25 @@ if (isTWA) {
 // Router function
 function router() {
     const path = window.location.hash.slice(1) || '/'
+    console.log('Current path:', path);  // 调试日志
     const app = document.querySelector('#app')
     app.innerHTML = ''
 
     app.appendChild(renderHeader())
 
-    switch (path) {
-        case '/':
-            app.appendChild(renderHome())
-            break
-        case '/restaurant':
-            app.appendChild(renderRestaurant())
-            break
-        case '/points':
-            app.appendChild(renderPointsSystem())
-            break
-        default:
-            app.appendChild(renderHome())
+    if (path === '/') {
+        console.log('Rendering home page');
+        app.appendChild(renderHome())
+    } else if (path.startsWith('/restaurant/')) {
+        const restaurant = path.split('/')[2]  // 获取餐厅标识符
+        console.log(`Rendering restaurant page for ${restaurant}`);
+        app.appendChild(renderRestaurant(restaurant))
+    } else if (path === '/points') {
+        console.log('Rendering points system page');
+        app.appendChild(renderPointsSystem())
+    } else {
+        console.log('Rendering default (home) page');
+        app.appendChild(renderHome())
     }
 }
 

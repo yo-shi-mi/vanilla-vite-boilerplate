@@ -1,8 +1,8 @@
-export function renderRestaurant() {
+export function renderRestaurant(restaurantId) {
   const restaurant = document.createElement('main');
   restaurant.className = 'container mx-auto mt-8 p-4';
   restaurant.innerHTML = `
-    <h2 class="text-3xl font-bold mb-4">餐廳 A</h2>
+    <h2 class="text-3xl font-bold mb-4">餐廳 ${restaurantId}</h2>
     <div class="bg-white rounded shadow p-4">
       <p class="mb-2"><strong>電話:</strong> 02-1234-5678</p>
       <p class="mb-2"><strong>地址:</strong> 台北市中山區某某路123號</p>
@@ -13,7 +13,7 @@ export function renderRestaurant() {
 
   // 添加訂位按鈕事件監聽器
   restaurant.querySelector('#reserveButton').addEventListener('click', () => {
-    alert('訂位功能即將推出！');
+    alert(`訂位功能即將推出！您選擇的是餐廳 ${restaurantId}`);
   });
 
   return restaurant;
