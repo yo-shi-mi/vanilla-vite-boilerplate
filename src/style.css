@@ -49,6 +49,7 @@ header {
 }
 
 .connect-wallet {
+    display: inline-block;
     background-color: white;
     color: var(--primary-color);
     border: 2px solid var(--primary-color);
