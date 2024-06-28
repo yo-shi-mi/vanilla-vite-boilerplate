@@ -33,6 +33,7 @@ header {
 .logo {
     display: flex;
     align-items: center;
+    margin-left: -20px;
 }
 
 .logo img {
@@ -72,6 +73,7 @@ main {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 30px;
+    margin-top: 20px;
 }
 
 h2 {

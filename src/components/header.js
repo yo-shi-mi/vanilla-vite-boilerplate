@@ -3,7 +3,7 @@ export function renderHeader() {
   header.innerHTML = `
     <div class="container header-content">
       <div class="logo">
-        <img src="/images/logo.png" alt="TeleDine Logo">
+        <img src="/images/logo.jpg" alt="TeleDine Logo">
         <h1>TeleDine</h1>
       </div>
       ${!window.Telegram?.WebApp ? '<button id="connectWallet" class="connect-wallet">Connect Wallet</button>' : ''}
