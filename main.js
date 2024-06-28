@@ -1,25 +1,41 @@
 import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
-import logoSrc from './assets/images/logo.png'
+import { renderHome } from './pages/home.js'
+import { renderRestaurant } from './pages/restaurant.js'
+import { renderPointsSystem } from './pages/pointsSystem.js'
+import { renderHeader } from './components/header.js'
+import { renderFooter } from './components/footer.js'
+import { connectWallet } from './utils/ethers.js'
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+// 路由函數
+function router() {
+  const path = window.location.hash.slice(1) || '/'
+  const app = document.querySelector('#app')
+  app.innerHTML = ''
+  app.appendChild(renderHeader())
 
-setupCounter(document.querySelector('#counter'))
+  switch (path) {
+    case '/':
+      app.appendChild(renderHome())
+      break
+    case '/restaurant':
+      app.appendChild(renderRestaurant())
+      break
+    case '/points':
+      app.appendChild(renderPointsSystem())
+      break
+    default:
+      app.appendChild(renderHome())
+  }
+
+  app.appendChild(renderFooter())
+}
+
+window.addEventListener('hashchange', router)
+window.addEventListener('load', router)
+
+// Connect Wallet 按鈕事件
+document.addEventListener('click', async (e) => {
+  if (e.target.id === 'connectWallet') {
+    await connectWallet()
+  }
+})

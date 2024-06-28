@@ -1,60 +1,97 @@
+import './style.css'
 import '../public/styles.css'
-// Init TWA
-Telegram.WebApp.ready();
+import { renderHome } from './pages/home.js'
+import { renderRestaurant } from './pages/restaurant.js'
+import { renderHeader } from './components/header.js'
+import { connectWallet } from './utils/ethers.js'
 
-// Event occurs whenever theme settings are changed in the user's Telegram app (including switching to night mode).
-Telegram.WebApp.onEvent('themeChanged', function() {
+// Check if running in Telegram Web App
+const isTWA = window.Telegram && window.Telegram.WebApp;
+
+// Initialize TWA if available
+if (isTWA) {
+    Telegram.WebApp.ready();
+
+    // Event for theme changes
+    Telegram.WebApp.onEvent('themeChanged', function () {
     document.documentElement.className = Telegram.WebApp.colorScheme;
-});
+      document.body.setAttribute('style', '--bg-color:' + Telegram.WebApp.backgroundColor);
+  });
 
-// Show main button
-Telegram.WebApp.MainButton.setParams({
-    text: 'Main Button'
-});
-Telegram.WebApp.MainButton.onClick(function () {
-    Telegram.WebApp.showAlert('Main Button was clicked')
-});	
-Telegram.WebApp.MainButton.show();
+    // Set up Main Button
+    Telegram.WebApp.MainButton.setParams({
+      text: 'Connect Wallet'
+  });
 
-// Function to call showPopup API
-function showPopup() {
-    Telegram.WebApp.showPopup({
-        title: 'Title',
-        message: 'Some message',
-        buttons: [
-            {id: 'link', type: 'default', text: 'Open ton.org'},
-            {type: 'cancel'},
-        ]
-    }, function(btn) {
-        if (btn === 'link') {
-            Telegram.WebApp.openLink('https://ton.org/');
-        }
-    });
+    Telegram.WebApp.MainButton.onClick(function () {
+      connectWallet();
+  });
+
+    Telegram.WebApp.MainButton.show();
+
+    // Set header color
+    Telegram.WebApp.setHeaderColor('secondary_bg_color');
+
+    // Handle viewport changes
+    function setViewportData() {
+        console.log('Viewport size:', window.innerWidth, 'x', Telegram.WebApp.viewportStableHeight);
+        console.log('Is Expanded:', Telegram.WebApp.isExpanded ? 'true' : 'false');
+    }
+
+    setViewportData();
+    Telegram.WebApp.onEvent('viewportChanged', setViewportData);
 }
 
-// Function to toggle main TWA button
-function toggleMainButton() {
-    if (Telegram.WebApp.MainButton.isVisible) {
-        Telegram.WebApp.MainButton.hide();
-    } else {
-        Telegram.WebApp.MainButton.show();
+// Router function
+function router() {
+    const path = window.location.hash.slice(1) || '/'
+    const app = document.querySelector('#app')
+    app.innerHTML = ''
+
+    if (!isTWA) {
+        app.appendChild(renderHeader())
+    }
+
+    switch (path) {
+        case '/':
+            app.appendChild(renderHome())
+            break
+        case '/restaurant':
+            app.appendChild(renderRestaurant())
+            break
+        default:
+            app.appendChild(renderHome())
     }
 }
 
-function setViewportData() {
-    var sizeEl = document.getElementById('viewport-params-size');
-    sizeEl.innerText = 'width: ' + window.innerWidth + ' x ' + 
-        'height: ' + Telegram.WebApp.viewportStableHeight;
+window.addEventListener('hashchange', router)
+window.addEventListener('load', router)
 
-    var expandEl = document.querySelector('#viewport-params-expand');
-    expandEl.innerText = 'Is Expanded: ' + (Telegram.WebApp.isExpanded ? 'true' : 'false');
+// Event listener for wallet connection
+document.addEventListener('click', async (e) => {
+    if (e.target.id === 'connectWallet') {
+        await connectWallet()
+    }
+})
+
+// Function to show popup (for TWA)
+function showPopup() {
+    if (isTWA) {
+    Telegram.WebApp.showPopup({
+        title: 'TeleDine',
+        message: 'Welcome to TeleDine!',
+        buttons: [
+          { id: 'explore', type: 'default', text: 'Explore Restaurants' },
+          { type: 'cancel' },
+      ]
+    }, function(btn) {
+        if (btn === 'explore') {
+            router();
+        }
+    });
+  }
 }
 
-Telegram.WebApp.setHeaderColor('secondary_bg_color');
-
-setViewportData();
-Telegram.WebApp.onEvent('viewportChanged', setViewportData);
-
-Telegram.WebApp.onEvent('themeChanged', function() {
-    document.body.setAttribute('style', '--bg-color:' + Telegram.WebApp.backgroundColor);
-});
+// Expose necessary functions to global scope
+window.showPopup = showPopup;
+window.connectWallet = connectWallet;
