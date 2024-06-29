@@ -8,6 +8,7 @@ import { renderPointsSystem } from './pages/pointsSystem.js'
 
 // Check if running in Telegram Web App
 const isTWA = window.Telegram && window.Telegram.WebApp;
+console.log('Global isTWA:', isTWA, typeof isTWA);
 
 // Initialize TWA if available
 if (isTWA) {
@@ -46,11 +47,11 @@ if (isTWA) {
 // Router function
 function router() {
     const path = window.location.hash.slice(1) || '/'
-    console.log('Current path:', path);  // 调试日志
+    console.log('Current path:', path);
     const app = document.querySelector('#app')
     app.innerHTML = ''
 
-    app.appendChild(renderHeader())
+    app.appendChild(renderHeader(isTWA))
 
     if (path === '/') {
         console.log('Rendering home page');

@@ -1,6 +1,6 @@
-export function renderHeader() {
-  const isTWA = window.Telegram && window.Telegram.WebApp;
-  console.log('renderHeader - isTWA:', isTWA);  // 調試日誌
+export function renderHeader(isTWA) {
+  const isTWA = !!(window.Telegram && window.Telegram.WebApp);
+  console.log('renderHeader - isTWA:', isTWA, typeof isTWA);  // 增強調試日誌
 
   const header = document.createElement('header')
   header.innerHTML = `
@@ -21,6 +21,10 @@ export function renderHeader() {
     e.preventDefault()
     window.location.hash = '/'
   })
+
+  // 額外檢查按鈕是否正確渲染
+  const connectWalletBtn = header.querySelector('#connectWallet');
+  console.log('Connect Wallet button rendered:', !!connectWalletBtn);
 
   return header
 }
