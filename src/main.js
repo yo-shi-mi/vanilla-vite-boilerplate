@@ -7,7 +7,7 @@ import { connectWallet } from './utils/ethers.js'
 import { renderPointsSystem } from './pages/pointsSystem.js'
 
 // Check if running in Telegram Web App
-const isTWA = window.Telegram && window.Telegram.WebApp;
+// const isTWA = window.Telegram && window.Telegram.WebApp;
 console.log('Global isTWA:', isTWA, typeof isTWA);
 
 // Initialize TWA if available
@@ -101,3 +101,30 @@ function showPopup() {
 window.showPopup = showPopup;
 window.connectWallet = connectWallet;
 document.addEventListener('DOMContentLoaded', router);
+
+// 在 main.js 或一個單獨的 utils 文件中
+
+function detectTWA() {
+    // 檢查是否在 Telegram WebApp 環境中
+    const isTelegramWebView = window.Telegram && window.Telegram.WebApp;
+
+    // 額外的檢查，確保我們真的在 TWA 環境中
+    const isInIframe = window !== window.parent;
+    const hasWebAppData = !!window.Telegram?.WebApp?.initData;
+
+    const isTWA = isTelegramWebView && isInIframe && hasWebAppData;
+
+    console.log('TWA Detection:', {
+        isTelegramWebView,
+        isInIframe,
+        hasWebAppData,
+        finalResult: isTWA
+    });
+
+    return isTWA;
+}
+
+// 使用這個函數來設置全局 isTWA 變量
+const isTWA = detectTWA();
+
+export { isTWA };
