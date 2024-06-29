@@ -1,4 +1,4 @@
-export function renderHeader(isTWA) {
+export function renderHeader() {
   const isTWA = !!(window.Telegram && window.Telegram.WebApp);
   console.log('renderHeader - isTWA:', isTWA, typeof isTWA);  // 增強調試日誌
 
